@@ -3,4 +3,7 @@
     <string name="now_playing_movies">Now Playing Movies</string>
     <string name="genre_list">Genre List</string>
     <string name="genre">Genre</string>
+    <string name="movies_by_genre">Movies By Genre</string>
+    <string name="movie_s_title">Movie\'s Title</string>
+    <string name="movie_date">Mar 30, 2022</string>
 </resources>

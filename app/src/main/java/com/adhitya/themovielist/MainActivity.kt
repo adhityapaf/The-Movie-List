@@ -1,14 +1,21 @@
 package com.adhitya.themovielist
 
+import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.LinearLayout
 import android.widget.Toast
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.adhitya.themovielist.BuildConfig.API_KEY
 import com.adhitya.themovielist.databinding.ActivityMainBinding
 import com.adhitya.themovielist.genre.GenreAdapter
+import com.adhitya.themovielist.genre.GenreMoviesAdapter
+import com.adhitya.themovielist.model.GenreMoviesResponse
 import com.adhitya.themovielist.model.GenreResponse
 import com.adhitya.themovielist.model.NowPlayingMoviesResponse
 import com.adhitya.themovielist.now_playing.NowPlayingMoviesAdapter
@@ -17,7 +24,7 @@ import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Response
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), GenreAdapter.GenreCallback {
 
     companion object {
         const val TAG = "MainActivity"
@@ -30,12 +37,14 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.displayOptions = androidx.appcompat.app.ActionBar.DISPLAY_SHOW_CUSTOM
         supportActionBar?.setCustomView(R.layout.action_bar)
+        supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor("#FFFFFF")))
         with(binding.rvGenreList) {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(this@MainActivity, LinearLayoutManager.HORIZONTAL, false)
         }
         loadNowPlayingMovies()
         loadGenres()
+        binding.rvGenreMovies.layoutManager = GridLayoutManager(this@MainActivity, 2)
     }
 
     private fun loadGenres() {
@@ -46,8 +55,8 @@ class MainActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     Log.d(TAG, "onResponse Genre: ${Gson().toJson(response.body())}")
                     val resBody = response.body()
-                    binding.rvGenreList.layoutManager
                     binding.rvGenreList.adapter = GenreAdapter(resBody, this@MainActivity)
+                    binding.spGenres.visibility = View.GONE
                 } else {
                     Log.d(TAG, "onResponseFailure Genre: ${Gson().toJson(response.message())}")
                     showToastError(response.message())
@@ -75,6 +84,7 @@ class MainActivity : AppCompatActivity() {
                     val responseBody = response.body()
                     binding.csiIndicator.indicatorsToShow = responseBody?.results?.size!!
                     binding.csvwNowPlayingMovies.adapter = NowPlayingMoviesAdapter(responseBody)
+                    binding.spNpm.visibility = View.GONE
                 } else {
                     Log.d(TAG, "onResponseFailure MPM: ${response.message()}")
                     showToastError(response.message())
@@ -91,5 +101,32 @@ class MainActivity : AppCompatActivity() {
 
     private fun showToastError(errorMsg: String) {
         Toast.makeText(this@MainActivity, "Terjadi Kesalahan: $errorMsg", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun resultCallback(intent: Intent) {
+        val id = intent.getIntExtra("genreId", 0)
+        val client = ApiConfig.getApiService().getGenreMoviesList(API_KEY, id)
+        client.enqueue(object: retrofit2.Callback<GenreMoviesResponse> {
+            override fun onResponse(
+                call: Call<GenreMoviesResponse>,
+                response: Response<GenreMoviesResponse>
+            ) {
+                if (response.isSuccessful) {
+                    Log.d(TAG, "onResponse Genre Movies : ${Gson().toJson(response.body())}")
+                    val responseBody = response.body()
+                    binding.rvGenreMovies.adapter = GenreMoviesAdapter(responseBody)
+                    binding.spMovies.visibility = View.GONE
+                } else {
+                    Log.d(TAG, "onResponseFailure Genre Movies: ${response.message()}")
+                    showToastError(response.message())
+                }
+            }
+
+            override fun onFailure(call: Call<GenreMoviesResponse>, t: Throwable) {
+                Log.d(TAG, "onFailure Genre Movies: ${t.message.toString()}")
+                showToastError(t.message.toString())
+            }
+
+        })
     }
 }

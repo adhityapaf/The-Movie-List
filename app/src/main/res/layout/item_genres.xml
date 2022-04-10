@@ -6,7 +6,7 @@
 
     <com.google.android.material.chip.Chip
         android:id="@+id/rv_item_genres"
-        style="@style/Widget.MaterialComponents.Chip.Choice"
+        sstyle="@style/Widget.App.Chip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

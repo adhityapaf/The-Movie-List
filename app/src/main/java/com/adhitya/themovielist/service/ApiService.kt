@@ -1,5 +1,6 @@
 package com.adhitya.themovielist.service
 
+import com.adhitya.themovielist.model.GenreMoviesResponse
 import com.adhitya.themovielist.model.GenreResponse
 import com.adhitya.themovielist.model.NowPlayingMoviesResponse
 import retrofit2.Call
@@ -19,4 +20,12 @@ interface ApiService {
         @Query("api_key")
         api_key: String
     ) : Call<GenreResponse>
+
+    @GET("discover/movie")
+    fun getGenreMoviesList(
+        @Query ("api_key")
+        api_key: String,
+        @Query ("with_genres")
+        with_genres: Int
+    ) : Call<GenreMoviesResponse>
 }

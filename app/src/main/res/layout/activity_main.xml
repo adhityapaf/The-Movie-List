@@ -1,76 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/tv_now_playing_movies"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/now_playing_movies"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.github.islamkhsh.CardSliderViewPager
-        android:id="@+id/csvw_now_playing_movies"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/sv_main"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:layout_marginTop="12dp"
-        app:auto_slide_time="3"
-        app:cardSlider_indicator="@id/csi_indicator"
-        app:cardSlider_otherPagesWidth="24dp"
-        app:cardSlider_pageMargin="12dp"
-        app:cardSlider_smallScaleFactor="0.9"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_now_playing_movies" />
+        android:layout_height="wrap_content">
 
-    <com.github.islamkhsh.CardSliderIndicator
-        android:id="@+id/csi_indicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        app:layout_constraintEnd_toEndOf="@id/csvw_now_playing_movies"
-        app:layout_constraintStart_toStartOf="@id/csvw_now_playing_movies"
-        app:layout_constraintTop_toBottomOf="@id/csvw_now_playing_movies" />
 
-    <TextView
-        android:id="@+id/tv_genre_list"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:text="@string/genre_list"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/csi_indicator" />
-
-    <com.google.android.material.chip.ChipGroup
-        android:id="@+id/cg_genre"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_genre_list"
-        app:singleLine="true"
-        app:singleSelection="true">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_genre_list"
+        <TextView
+            android:id="@+id/tv_now_playing_movies"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingStart="4dp"
-            android:paddingEnd="4dp"
-            android:layout_marginTop="12dp" />
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/now_playing_movies"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </com.google.android.material.chip.ChipGroup>
+        <ProgressBar
+            android:id="@+id/sp_npm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="5dp"
+            android:translationZ="5dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@id/csvw_now_playing_movies"
+            app:layout_constraintEnd_toEndOf="@id/csvw_now_playing_movies"
+            app:layout_constraintStart_toStartOf="@id/csvw_now_playing_movies"
+            app:layout_constraintTop_toTopOf="@id/csvw_now_playing_movies" />
 
+        <com.github.islamkhsh.CardSliderViewPager
+            android:id="@+id/csvw_now_playing_movies"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginTop="12dp"
+            app:auto_slide_time="3"
+            app:cardSlider_indicator="@id/csi_indicator"
+            app:cardSlider_otherPagesWidth="24dp"
+            app:cardSlider_pageMargin="12dp"
+            app:cardSlider_smallScaleFactor="0.9"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_now_playing_movies" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <com.github.islamkhsh.CardSliderIndicator
+            android:id="@+id/csi_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            app:layout_constraintEnd_toEndOf="@id/csvw_now_playing_movies"
+            app:layout_constraintStart_toStartOf="@id/csvw_now_playing_movies"
+            app:layout_constraintTop_toBottomOf="@id/csvw_now_playing_movies" />
+
+        <TextView
+            android:id="@+id/tv_genre_list"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/genre_list"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/csi_indicator" />
+
+        <ProgressBar
+            android:id="@+id/sp_genres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="5dp"
+            android:translationZ="5dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@id/cg_genre"
+            app:layout_constraintEnd_toEndOf="@id/cg_genre"
+            app:layout_constraintStart_toStartOf="@id/cg_genre"
+            app:layout_constraintTop_toTopOf="@id/cg_genre" />
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/cg_genre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_genre_list"
+            app:singleLine="true"
+            app:singleSelection="true">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_genre_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:paddingStart="4dp"
+                android:paddingEnd="4dp" />
+
+        </com.google.android.material.chip.ChipGroup>
+
+        <TextView
+            android:id="@+id/tv_movies_by_genre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/movies_by_genre"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cg_genre" />
+
+        <ProgressBar
+            android:id="@+id/sp_movies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="5dp"
+            android:translationZ="5dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="@id/rv_genre_movies"
+            app:layout_constraintEnd_toEndOf="@id/rv_genre_movies"
+            app:layout_constraintStart_toStartOf="@id/rv_genre_movies"
+            app:layout_constraintTop_toTopOf="@id/rv_genre_movies" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_genre_movies"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:paddingStart="24dp"
+            android:paddingEnd="24dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_movies_by_genre" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>
